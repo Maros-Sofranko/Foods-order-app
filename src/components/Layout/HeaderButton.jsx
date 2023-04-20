@@ -3,7 +3,7 @@ import { FiShoppingCart } from "react-icons/fi";
 
 const HeaderButton = (props) => {
   return (
-    <button className={classes.button}>
+    <button className={classes.button} onClick={props.openCart}>
       <span className={classes.icon}>
         <FiShoppingCart />
       </span>
