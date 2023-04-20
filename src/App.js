@@ -1,7 +1,12 @@
+import Header from "./components/Layout/Header";
 
 function App() {
   return (
-    <div>FOOD APP</div>
+    <>
+    <header>
+      <Header />
+    </header>
+    </>
   );
 }
 
