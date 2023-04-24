@@ -3,6 +3,7 @@ import Cart from "./components/Cart/Cart";
 import Header from "./components/Layout/Header";
 import Meals from "./components/Meals/Meals";
 import Modal from "react-modal";
+import CartProvider from "./store/CartProvider";
 
 const customStyles = {
   content: {
@@ -30,7 +31,7 @@ function App() {
   const closeModal = () => setModalIsOpen(false);
 
   return (
-    <>
+    <CartProvider>
       <header>
         <Modal
           isOpen={modalIsOpen}
@@ -44,7 +45,7 @@ function App() {
       <main>
         <Meals />
       </main>
-    </>
+    </CartProvider>
   );
 }
 
