@@ -6,12 +6,17 @@ import Spinner from "../UI/Spinner";
 
 const AvailableMeals = (props) => {
   const [meals, setMeals] = useState([]);
+  const [httpError, setHttpError] = useState(null);
 
   useEffect(() => {
     const fetchMeals = async () => {
       const response = await fetch(
         "https://my-food-order-app-d0974-default-rtdb.europe-west1.firebasedatabase.app/meals.json"
       );
+
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
 
       const mealsData = await response.json();
 
@@ -29,15 +34,21 @@ const AvailableMeals = (props) => {
       setMeals(loadedMeals);
     };
 
-    fetchMeals();
+    fetchMeals().catch((error) => {
+      setHttpError(error.message);
+    });
   }, []);
 
   const mealsList = meals.map((meal) => {
     return <MealItem key={meal.id} meal={meal} />;
   });
 
+  if (httpError) {
+    return <p className={classes["fetch-error"]}>{httpError}</p>;
+  }
+
   if (meals.length === 0) {
-    return <Spinner />
+    return <Spinner />;
   }
 
   return (
