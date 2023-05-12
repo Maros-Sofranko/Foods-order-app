@@ -1,43 +1,49 @@
+import { useState, useEffect } from "react";
 import Card from "../UI/Card";
 import classes from "./AvailableMeals.module.css";
 import MealItem from "./MealItem";
-
-const MOCK_DATA = [
-  {
-    id: "m1",
-    name: "Sushi",
-    description: "Finest fish and veggies",
-    price: 30.00,
-  },
-  {
-    id: "m2",
-    name: "Schnitzel",
-    description: "A german specialty!",
-    price: 16.5,
-  },
-  {
-    id: "m3",
-    name: "Barbecue Burger",
-    description: "American, raw, meaty",
-    price: 13.00,
-  },
-  {
-    id: "m4",
-    name: "Green Bowl",
-    description: "Healthy...and green...",
-    price: 18.99,
-  },
-];
+import Spinner from "../UI/Spinner";
 
 const AvailableMeals = (props) => {
-  const meals = MOCK_DATA.map((meal) => {
+  const [meals, setMeals] = useState([]);
+
+  useEffect(() => {
+    const fetchMeals = async () => {
+      const response = await fetch(
+        "https://my-food-order-app-d0974-default-rtdb.europe-west1.firebasedatabase.app/meals.json"
+      );
+
+      const mealsData = await response.json();
+
+      let loadedMeals = [];
+
+      for (const key in mealsData) {
+        loadedMeals.push({
+          id: key,
+          name: mealsData[key].name,
+          description: mealsData[key].description,
+          price: mealsData[key].price,
+        });
+      }
+
+      setMeals(loadedMeals);
+    };
+
+    fetchMeals();
+  }, []);
+
+  const mealsList = meals.map((meal) => {
     return <MealItem key={meal.id} meal={meal} />;
   });
+
+  if (meals.length === 0) {
+    return <Spinner />
+  }
 
   return (
     <div className={classes.meals}>
       <Card>
-        <ul>{meals}</ul>
+        <ul>{mealsList}</ul>
       </Card>
     </div>
   );
