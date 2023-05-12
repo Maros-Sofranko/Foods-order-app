@@ -6,6 +6,7 @@ import Spinner from "../UI/Spinner";
 
 const AvailableMeals = (props) => {
   const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [httpError, setHttpError] = useState(null);
 
   useEffect(() => {
@@ -32,10 +33,12 @@ const AvailableMeals = (props) => {
       }
 
       setMeals(loadedMeals);
+      setIsLoading(false);
     };
 
     fetchMeals().catch((error) => {
       setHttpError(error.message);
+      setIsLoading(false);
     });
   }, []);
 
@@ -43,12 +46,12 @@ const AvailableMeals = (props) => {
     return <MealItem key={meal.id} meal={meal} />;
   });
 
-  if (httpError) {
-    return <p className={classes["fetch-error"]}>{httpError}</p>;
+  if (isLoading) {
+    return <Spinner />;
   }
 
-  if (meals.length === 0) {
-    return <Spinner />;
+  if (httpError) {
+    return <p className={classes["fetch-error"]}>{httpError}</p>;
   }
 
   return (
