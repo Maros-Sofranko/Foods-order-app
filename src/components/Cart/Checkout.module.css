@@ -4,6 +4,11 @@
   overflow: auto;
 }
 
+.error-text {
+  color: red;
+  font-size: medium;
+}
+
 .control {
   margin-bottom: 0.5rem;
 }
@@ -41,6 +46,11 @@
 .actions button:hover,
 .actions button:active {
   background-color: #ffe6dc;
+}
+
+.actions button:disabled {
+  cursor: not-allowed;
+  background-color: rgb(188, 188, 188);
 }
 
 .actions .submit {
