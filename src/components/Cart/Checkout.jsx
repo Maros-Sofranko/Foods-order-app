@@ -60,6 +60,13 @@ const Checkout = (props) => {
 
     console.log(enteredName, enteredStreet, enteredPostalCode, enteredCity);
 
+    props.onConfirmOrder({
+      name: enteredName,
+      street: enteredStreet,
+      postalCode: enteredPostalCode,
+      city: enteredCity,
+    });
+
     nameReset();
     streetReset();
     postalCodeReset();
@@ -84,7 +91,9 @@ const Checkout = (props) => {
           </p>
         )}
       </div>
-      <div className={`${classes.control} ${streetHasError && classes.invalid}`}>
+      <div
+        className={`${classes.control} ${streetHasError && classes.invalid}`}
+      >
         <label htmlFor="street">Street</label>
         <input
           type="text"
@@ -98,7 +107,11 @@ const Checkout = (props) => {
           <p className={classes["error-text"]}>Enter the street you live on!</p>
         )}
       </div>
-      <div className={`${classes.control} ${postalCodeHasError && classes.invalid}`}>
+      <div
+        className={`${classes.control} ${
+          postalCodeHasError && classes.invalid
+        }`}
+      >
         <label htmlFor="postal">Postal Code</label>
         <input
           type="text"

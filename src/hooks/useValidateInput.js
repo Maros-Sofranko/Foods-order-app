@@ -18,7 +18,7 @@ const useValidateInput = (validateInput) => {
   const reset = () => {
     setEnteredValue("");
     setIsTouched(false);
-  }
+  };
 
   return {
     enteredValue,
